@@ -35,7 +35,7 @@ connexion_params = {
         'database': 'mini_projet'
     }
 
-liste_personne = ListePersonne()
+liste_personne = ListePersonne(connexion_params)
 liste_personne.ajouter_personne("Ginette", 64)
 liste_personne.ajouter_personne("Bob", 52)
 liste_personne.afficher_personne()
