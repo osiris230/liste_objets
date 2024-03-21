@@ -32,7 +32,7 @@ connexion_params = {
         'host': 'localhost',
         'user': 'root',
         'password': '',
-        'database': 'mini_projet'
+        'database': 'liste_objet'
     }
 
 liste_personne = ListePersonne(connexion_params)
