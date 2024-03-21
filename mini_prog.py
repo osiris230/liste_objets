@@ -15,8 +15,8 @@ class ListePersonne:
         nouvelle_personne = Personne(nom, age)
         self.liste_personne.append(nouvelle_personne)
         try:
-            requete = "INSERT INTO personnes (nom, age) Values (%s,%s)"
-        except mysql.Error as err:
+            requete = "INSERT INTO personnes (nom, age) Values (%s,%s)" #(?,?)
+        except mysql.Error:
             print("Erreur de l'ajout.")
 
     def afficher_personne(self):
@@ -24,7 +24,7 @@ class ListePersonne:
             self.cursor.execute("SELECT nom, age FROM personnes")
             for (nom, age) in self.cursor:
                 print(f"Nom: {nom}, Age: {age}")
-        except mysql.Error as err:
+        except mysql.Error:
             print("Erreur de l'affichage.")
 
 
