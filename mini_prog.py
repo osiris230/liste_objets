@@ -16,6 +16,8 @@ class ListePersonne:
         self.liste_personne.append(nouvelle_personne)
         try:
             requete = "INSERT INTO personnes (nom, age) Values (%s,%s)" #(?,?)
+            self.cursor.execute(requete, (nom, age))
+            self.connexion.commit()
         except mysql.Error:
             print("Erreur de l'ajout.")
 
@@ -40,8 +42,3 @@ liste_personne.ajouter_personne("Ginette", 64)
 liste_personne.ajouter_personne("Bob", 52)
 liste_personne.afficher_personne()
 
-print(connexion_params)
-request = connexion_params.cursor()
-request.execute("SELECT * FROM personnes")
-result = request.fetchall()
-print(result)
