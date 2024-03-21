@@ -14,10 +14,18 @@ class ListePersonne:
     def ajouter_personne(self, nom, age):
         nouvelle_personne = Personne(nom, age)
         self.liste_personne.append(nouvelle_personne)
+        try:
+            requete = "INSERT INTO personnes (nom, age) Values (%s,%s)"
+        except mysql.Error as err:
+            print("Erreur de l'ajout.")
 
     def afficher_personne(self):
-        for personne in self.liste_personne:
-            personne.afficher()
+        try:
+            self.cursor.execute("SELECT nom, age FROM personnes")
+            for (nom, age) in self.cursor:
+                print(f"Nom: {nom}, Age: {age}")
+        except mysql.Error as err:
+            print("Erreur de l'affichage.")
 
 
 connexion_params = {
