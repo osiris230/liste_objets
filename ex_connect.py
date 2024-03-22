@@ -1,5 +1,6 @@
 import mysql.connector as mysql
 
+
 connection= mysql.connect(
     user='root',
     password= '',
@@ -33,7 +34,7 @@ def afficher():
 code_permanent = input("Entrez le code permanent : ")
 nom = input("Entrez le nom : ")
 prenom = input("Entrez le prénom : ")
-date_naissance = input("Entrez la date de naissance au format aaaa/mm/jj : ")
+date_naissance = input("Entrez la date de naissance au format aaaa-mm-jj : ")
 spécialite = input("Entrez la spécialité : ")
 
 
