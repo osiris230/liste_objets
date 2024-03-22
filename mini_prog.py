@@ -21,6 +21,12 @@ class ListePersonne:
         except mysql.Error:
             print("Erreur de l'ajout.")
 
+    def insert(nom, age):
+        sql = "INSERT INTO personnes (nom, age) Values (%s,%s)" #(?,?)
+        cursor = mysql.connect().cursor()
+        infos =  (cursor.lastrowid, nom, age)
+        cursor.execute(sql,infos)
+
     def afficher_personne(self):
         try:
             self.cursor.execute("SELECT nom, age FROM personnes")
@@ -41,4 +47,3 @@ liste_personne = ListePersonne(connexion_params)
 liste_personne.ajouter_personne("Ginette", 64)
 liste_personne.ajouter_personne("Bob", 52)
 liste_personne.afficher_personne()
-
