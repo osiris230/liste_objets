@@ -4,6 +4,7 @@ class Personne:
     def __init__(self, nom, age):
         self.nom = nom
         self.age = age
+        self.liste_personne = []
 
 class ListePersonne:
     def __init__(self, connexion_params):
@@ -15,8 +16,8 @@ class ListePersonne:
         nouvelle_personne = Personne(nom, age)
         self.liste_personne.append(nouvelle_personne)
         try:
-            requete = "INSERT INTO personnes (nom, age) Values (%s,%s)" #(?,?)
-            self.cursor.execute(requete, (nom, age))
+            sql = "INSERT INTO personnes (nom, age) Values (%s,%s)" #(?,?)
+            self.cursor.execute(sql, (nom, age))
             self.connexion.commit()
         except mysql.Error:
             print("Erreur de l'ajout.")
@@ -35,6 +36,32 @@ class ListePersonne:
         except mysql.Error:
             print("Erreur de l'affichage.")
 
+    def rechercher_personne(self, nom):
+        try:
+            sql = "SELECT nom, age FROM personnes WHERE nom = %s"
+            self.cursor.execute(sql, (nom,))
+            resultats = self.cursor.fetchall()
+            if resultats:
+                for (nom, age) in resultats:
+                    print(f"Nom: {nom}, Age: {age}")
+            else:
+                print("Personne non trouvée.")
+        except mysql.Error:
+            print("Erreur lors de la recherche: ")
+
+    def filtre_age(self, min_age, max_age):
+        try:
+            sql = "SELECT nom, age FROM personnes WHERE age BETWEEN %s AND %s"
+            self.cursor.execute(sql, (min_age, max_age))
+            resultats = self.cursor.fetchall()
+            if resultats:
+                for (nom, age) in resultats:
+                    print(f"Nom: {nom}, Age: {age}")
+            else:
+                print("Aucune personne trouvée dans cette tranche d'âge.")
+        except mysql.Error:
+            print("Erreur lors du filtrage: ")
+
 
 connexion_params = {
         'host': 'localhost',
@@ -44,6 +71,8 @@ connexion_params = {
     }
 
 liste_personne = ListePersonne(connexion_params)
-liste_personne.ajouter_personne("Ginette", 64)
-liste_personne.ajouter_personne("Bob", 52)
+#liste_personne.ajouter_personne("Ginette", 64)
+#liste_personne.ajouter_personne("Bob", 52)
 liste_personne.afficher_personne()
+liste_personne.rechercher_personne("Alice")
+liste_personne.filtre_age(53,64)
