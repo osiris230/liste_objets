@@ -4,6 +4,7 @@ from liste_personnes.liste_dao import ListePersonneDao
 
 
 personnes, message = ListePersonneDao.afficher_personne()
+print(message)
 for personne in personnes:
     print(f"Nom : {personne[0]}, Age : {personne[1]}")
     print("----------------------------")
