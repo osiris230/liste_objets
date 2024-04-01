@@ -1,4 +1,3 @@
-from database import connexion_db
 import database as db
 from liste_personnes.liste import Personne
 class ListePersonneDao:
