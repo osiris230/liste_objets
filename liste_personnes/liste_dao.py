@@ -26,7 +26,7 @@ class ListePersonneDao:
         try:
             ListePersonneDao.cursor.execute(sql)
             personnes = ListePersonneDao.cursor.fetchall()
-            
+            ListePersonneDao.cursor.close()
             message = "Succes"
         except Exception as ex:
             print(ex)
@@ -61,10 +61,11 @@ class ListePersonneDao:
         return resultat, message
             
 
-
+"""
 liste_personne = ListePersonneDao()
 #liste_personne.ajouter_personne("Ginette", 64)
 #liste_personne.ajouter_personne("Bob", 52)
 liste_personne.afficher_personne()
 liste_personne.rechercher_personne("Alice")
 liste_personne.filtre_age(53,64)
+"""
