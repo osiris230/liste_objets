@@ -22,21 +22,24 @@ class FileAttente:
 
     @classmethod
     def supprimer_personne_de_attente(cls):
-        sql = "SELECT id, nom FROM fileattente ORDER BY id ASC LIMIT 1"
+        sql_prioritaire = "SELECT id, nom FROM FileAttente WHERE prioritaire = TRUE ORDER BY id ASC LIMIT 1"
+        sql_non_prioritaire = "SELECT id, nom FROM FileAttente WHERE prioritaire = FALSE OR prioritaire IS NULL ORDER BY id ASC LIMIT 1"
         sql_suppression = "DELETE FROM fileattente WHERE id = %s"
         try:
-            FileAttente.cursor.execute(sql)
+            FileAttente.cursor.execute(sql_prioritaire)
             personne = FileAttente.cursor.fetchone()
-            if personne:
+            if not personne:
+                FileAttente.cursor.execute(sql_non_prioritaire)
+                personne = FileAttente.cursor.fetchone()
+            elif personne:
                 id_personne, nom_personne = personne
-                
                 FileAttente.cursor.execute(sql_suppression, (id_personne,))
                 FileAttente.connexion.commit()
-                print(f"{nom_personne} a été supprimé(e) de la file d'attente.")
-            else:
-                print("La file d'attente est vide.")
+                message = f"{nom_personne} a été supprimé(e) de la file d'attente."
+        
         except Exception as ex:
-            print(f"Erreur lors de la suppression de la file d'attente: ")
+            message = f"Erreur lors de la suppression de la file d'attente: "
+        return message
 
 
 #file.ajouter_personne_en_attente("Bob")

@@ -17,7 +17,7 @@ class ListePersonneDao:
             ListePersonneDao.cursor.close()
             message = f"Ajout de {per.nom} avec succès."
         except Exception as ex:
-            message = "Erreur de l'ajout."
+            message = "Erreur lors de l'ajout."
         return message
     
     @classmethod
