@@ -27,3 +27,16 @@ from salle_cinema.reservation_dao import ReservationDao
 
 #message = ReservationDao.nombre_places_disponibles()
 #print(message)
+
+#reservations = ReservationDao.filtrer_reservations_par_personne("Bob")
+
+#for reservation in reservations:
+#    print(f"Réservations pour {reservation[0]}:")
+#    print(f"Nom: {reservation[0]}, Place: {reservation[1]}")
+
+#message = ReservationDao.annuler_reservation("Bob")
+#print(message)
+
+#rsv = SalleCinema("John","",1)
+#data = ReservationDao.reserver_place_speciale(rsv)
+#print(data)

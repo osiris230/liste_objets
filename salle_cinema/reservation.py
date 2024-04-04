@@ -1,7 +1,8 @@
 class SalleCinema:
-    def __init__(self, nom, place):
+    def __init__(self, nom, place, place_speciale):
         self.__nom = nom
         self.__place = place
+        self.__place_speciale = place_speciale
 
     @property
     def nom(self):
@@ -18,3 +19,11 @@ class SalleCinema:
     @place.setter
     def place(self, value):
         self.__place = value
+
+    @property
+    def place_speciale(self):
+        return self.__place_speciale
+
+    @place_speciale.setter
+    def place_speciale(self, value):
+        self.__place_speciale = value

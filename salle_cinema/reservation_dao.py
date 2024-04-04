@@ -8,8 +8,7 @@ class ReservationDao:
         pass
 
     @classmethod
-    def reserver_place(cls, rsv:SalleCinema):
-        if ReservationDao.nombre_places_disponibles() > 0: 
+    def reserver_place(cls, rsv:SalleCinema): 
             sql = "INSERT INTO reservation (nom, place) VALUES (%s, %s)"
             params = (rsv.nom, rsv.place)
             try:
@@ -19,9 +18,8 @@ class ReservationDao:
                 message = f"Ajout de {rsv.nom} à la place {rsv.place} avec succès."
             except Exception as ex:
                 message = f"Erreur lors de l'ajout: {ex}"
-        else:
-            message = "Aucune place disponible."
-        return message
+            
+            return message
     
     @classmethod
     def afficher_places_reservees(cls):
@@ -46,4 +44,43 @@ class ReservationDao:
             message = f"Nombre de places disponibles : {places_disponibles}"
         except Exception as ex:
             print(f"Erreur lors du calcul des places disponibles : {ex}")
+        return message
+    
+    @classmethod
+    def filtrer_reservations_par_personne(cls,nom):
+        sql = "SELECT * FROM reservation WHERE nom = %s"
+        try:
+            ReservationDao.connexion.cursor()
+            ReservationDao.cursor.execute(sql, (nom,))
+            reservations = ReservationDao.cursor.fetchall()
+    
+        except Exception as ex:
+            print(f"Erreur lors de la récupération des réservations pour {nom}: {ex}")
+        return reservations
+    
+    @classmethod
+    def annuler_reservation(cls, nom):
+        sql = "DELETE FROM reservation WHERE nom = %s"
+        try:
+            ReservationDao.connexion.cursor()
+            ReservationDao.cursor.execute(sql, (nom,))
+            ReservationDao.connexion.commit()
+            
+            message = f"Toutes les réservations pour {nom} ont été annulées."
+        except Exception as ex:
+            print(f"Erreur lors de l'annulation des réservations pour {nom}: {ex}")
+        return message
+    
+    @classmethod
+    def reserver_place_speciale(cls,rsv:SalleCinema):
+        sql = "INSERT INTO reservation (nom, place_speciale) VALUES (%s, %s)"
+        params = (rsv.nom, rsv.place_speciale)
+        try:
+            ReservationDao.connexion.cursor()
+            ReservationDao.cursor.execute(sql, params)
+            ReservationDao.connexion.commit()
+            message = f"Ajout de {rsv.nom} à la place spéciale {rsv.place_speciale} avec succès."
+        except Exception as ex:
+            message = f"Erreur lors de l'ajout: {ex}"
+            
         return message
