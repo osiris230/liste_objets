@@ -7,18 +7,21 @@ class FileAttente:
         pass
 
     @classmethod
-    def ajouter_personne_en_attente(cls, fil:File, prioritaire=False):
-        sql = "INSERT INTO fileattente (nom) VALUES (%s)"
+    def ajouter_personne_en_attente(cls, fil:File):
+        sql = "INSERT INTO fileattente (nom, prioritaire) VALUES (%s,%s)"
+        params = (fil.nom, bool(fil.prioritaire))
         try:
-            FileAttente.cursor.execute(sql, (fil.nom,int(prioritaire)))
+            FileAttente.cursor.execute(sql, params)
             FileAttente.connexion.commit()
-            etat = "prioritaire" if prioritaire else "normale"
-            print(f"{fil.nom} a été ajouté(e) à la file d'attente comme une personne {etat}.")
+            etat = "prioritaire" if fil.prioritaire else "normale"
+            message = f"{fil.nom} a été ajouté(e) à la file d'attente comme une personne {etat}."
         except Exception as ex:
             print(f"Erreur lors de l'ajout à la file d'attente: ")
+        return message
     @classmethod        
     def ajouter_personne_prioritaire(cls,fil:File):
-        FileAttente.ajouter_personne_en_attente(fil.nom, prioritaire=True)
+        fil.prioritaire = True
+        return FileAttente.ajouter_personne_en_attente(fil)
 
     @classmethod
     def supprimer_personne_de_attente(cls):
@@ -41,7 +44,7 @@ class FileAttente:
             message = f"Erreur lors de la suppression de la file d'attente: "
         return message
 
+#file = FileAttente()
+#file.ajouter_personne_en_attente("Bob",0)
+#file.ajouter_personne_prioritaire("Ginette",1)
 
-#file.ajouter_personne_en_attente("Bob")
-#file.ajouter_personne_en_attente("Alice")
-#file.supprimer_personne_de_attente()

@@ -26,7 +26,7 @@ class ListePersonneDao:
         try:
             ListePersonneDao.cursor.execute(sql)
             personnes = ListePersonneDao.cursor.fetchall()
-            ListePersonneDao.cursor.close()
+            
             message = "Succes"
         except Exception as ex:
             print(ex)
@@ -39,13 +39,13 @@ class ListePersonneDao:
         sql = "SELECT nom, age FROM personnes WHERE nom = %s"
         try:
             ListePersonneDao.cursor.execute(sql, (nom,))
-            resultat = ListePersonneDao.cursor.fetchone()
-            ListePersonneDao.cursor.close()
+            resultats = ListePersonneDao.cursor.fetchone()
+            
             message = "Success"
         except Exception as ex:
-            resultat = []
+            resultats = []
             message = "Erreur lors de la recherche: "
-        return resultat, message
+        return resultats, message
     
     @classmethod
     def filtre_age(cls, min_age, max_age):
@@ -53,7 +53,7 @@ class ListePersonneDao:
         try:
             ListePersonneDao.cursor.execute(sql, (min_age, max_age))
             resultat = ListePersonneDao.cursor.fetchall()
-            ListePersonneDao.cursor.close()
+            
             message = "Success"
         except Exception as ex:
             resultat = []
@@ -61,11 +61,10 @@ class ListePersonneDao:
         return resultat, message
             
 
-"""
-liste_personne = ListePersonneDao()
-#liste_personne.ajouter_personne("Ginette", 64)
+
+#liste_personne = ListePersonneDao()
+#liste_personne.ajouter_personne("Rambo", 60)
 #liste_personne.ajouter_personne("Bob", 52)
-liste_personne.afficher_personne()
-liste_personne.rechercher_personne("Alice")
-liste_personne.filtre_age(53,64)
-"""
+#liste_personne.afficher_personne()
+#liste_personne.rechercher_personne("Alice")
+#liste_personne.filtre_age(53,64)
