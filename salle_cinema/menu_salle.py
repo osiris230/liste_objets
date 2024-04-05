@@ -17,7 +17,7 @@ def menu_salle():
         if choix == "1":
             nom = input("Entrez le nom de la réservation : ")
             place = input("Entrez le numéro de la place à réserver : ")
-            reservation = SalleCinema(nom, place)
+            reservation = SalleCinema(nom, place, place_speciale=0)
             message = ReservationDao.reserver_place(reservation)
             print(message)
             

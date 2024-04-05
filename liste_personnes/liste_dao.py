@@ -12,9 +12,10 @@ class ListePersonneDao:
         sql = "INSERT INTO personnes (nom, age) Values (%s,%s)"
         params = (per.nom, per.age)
         try:
+            
             ListePersonneDao.cursor.execute(sql,params)
             ListePersonneDao.connexion.commit()
-            ListePersonneDao.cursor.close()
+            #ListePersonneDao.cursor.close()
             message = f"Ajout de {per.nom} avec succès."
         except Exception as ex:
             message = "Erreur lors de l'ajout."
